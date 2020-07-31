@@ -19,23 +19,14 @@ function createConnection() {
   pcConstraint = null;
   dataConstraint = null;
 
-  window.localConnection = localConnection = new RTCPeerConnection(
-    servers,
-    pcConstraint
-  );
-
-  sendChannel = localConnection.createDataChannel(
-    "sendDataChannel",
-    dataConstraint
-  );
-
+  window.localConnection = localConnection = new RTCPeerConnection(servers, pcConstraint);
+  sendChannel = localConnection.createDataChannel("sendDataChannel", dataConstraint);
   localConnection.onicecandidate = iceCallback1;
+
   sendChannel.onopen = onSendChannelStateChange;
   sendChannel.onclose = onSendChannelStateChange;
 
-  window.remoteConnection = remoteConnection
-  = new RTCPeerConnection(servers,pcConstraint);
-
+  window.remoteConnection = remoteConnection = new RTCPeerConnection(servers,pcConstraint);
   remoteConnection.onicecandidate = iceCallback2;
   remoteConnection.ondatachannel = receiveChannelCallback;
 
@@ -72,7 +63,7 @@ function onAddIceCandidateError(error) {
 
 function onSendChannelStateChange() {
   var readyState = sendChannel.readyState;
-//   /trace("Send channel state is: " + readyState);
+  console.trace("Send channel state is: " + readyState);
   if (readyState === "open") {
       console.log('opened');
   } else {
